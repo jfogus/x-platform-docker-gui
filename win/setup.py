@@ -1,7 +1,7 @@
 import subprocess
 
 
-def setup():
+def setup(args: "list[str]") -> None:
     # Install Dependencies
     try:
         # Get current ExecutionPolicy to reset after script
@@ -13,11 +13,17 @@ def setup():
         proc.wait()
 
         # Run the script
-        proc = subprocess.Popen(["PowerShell.exe", "-Command", ".\\win\\setup.ps1"])
-        proc.wait()
+        if "install" in args:
+            proc = subprocess.Popen(["PowerShell.exe", "-Command", ".\\win\\install.ps1"])
+            proc.wait()
 
-        proc = subprocess.Popen(["PowerShell.exe", "-Command", ".\\win\\run.sp1"])
-        proc.wait()
+        if "run" in args:
+            proc = subprocess.Popen(["PowerShell.exe", "-Command", ".\\win\\run.ps1"])
+            proc.wait()
+
+        if "uninstall" in args:
+            proc = subprocess.Popen(["PowerShell.exe", "-Command", ".\\win\\uninstall.ps1"])
+            proc.wait()
 
         # Reset ExecutionPolicy
         proc = subprocess.Popen(["PowerShell.exe", "-Command", "Set-ExecutionPolicy -Scope CurrentUser {}".format(policy)])
