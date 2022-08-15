@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 import platform
 import argparse
+from typing import Union, Optional
 
 import mac.setup
 import lin.setup
 import win.setup
 
 
-def main(argList: "list(str)") -> None:
+def main(argList: "dict[str, Union[bool, str]]") -> None:
     supported_systems = ["Darwin", "Linux", "Windows"]
     system = None
 
@@ -66,7 +67,7 @@ def display_os_menu(supported_systems: "list[str]") -> int:
     return choice
 
 
-def process_system(system: str, args: "list(str)") -> None:
+def process_system(system: str, args: "dict[str, Union[bool, str]]") -> None:
     """ Calls the appropriate function based on the given system. """
     if system == "Darwin":
         mac.setup.setup(args)
@@ -84,8 +85,9 @@ def parse_args():
     parser.add_argument("-i", "--install", action="store_true", help="Install dependencies.")
     parser.add_argument("-r", "--run", action="store_true", help="Run the docker container.")
     parser.add_argument("-u", "--uninstall", action="store_true", help="Uninstall dependencies.")
+    parser.add_argument("-c", "--container")
 
-    return [arg for arg, isset in vars(parser.parse_args()).items() if isset]
+    return vars(parser.parse_args())
 
 
 if __name__ == "__main__":
