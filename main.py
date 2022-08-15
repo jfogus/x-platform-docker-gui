@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import platform
 import argparse
-from typing import Union, Optional
+from typing import Union
 
 import mac.setup
 import lin.setup
