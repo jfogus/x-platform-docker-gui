@@ -67,14 +67,12 @@ def display_os_menu(supported_systems: "list[str]") -> int:
 def process_system(system):
     """ Calls the appropriate function based on the given system. """
     if system == "Darwin":
-        print("Darwin was chosen")
-        # mac.setup.setup()
+        mac.setup.setup()
         pass
     elif system == "Linux":
-        # lin.setup.setup()
+        lin.setup.setup()
         pass
     elif system == "Windows":
-        print("Windows was chosen")
         win.setup.setup()
         pass
     else:
