@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import platform
 
 import mac.setup
@@ -68,13 +69,10 @@ def process_system(system):
     """ Calls the appropriate function based on the given system. """
     if system == "Darwin":
         mac.setup.setup()
-        pass
     elif system == "Linux":
         lin.setup.setup()
-        pass
     elif system == "Windows":
         win.setup.setup()
-        pass
     else:
         # Unknown system
         print("Error: Unable to identify your operating system. Exiting.")
