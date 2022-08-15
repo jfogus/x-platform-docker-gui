@@ -1,7 +1,10 @@
 import subprocess
 
+from typing import Union
 
-def setup(args: "list[str]") -> None:
+
+def setup(args: "dict[str, Union[bool, str]]") -> None:
+    present_args = [arg for arg, val in args.items() if val]
     # Install Dependencies
     try:
         # Get current ExecutionPolicy to reset after script
@@ -13,15 +16,16 @@ def setup(args: "list[str]") -> None:
         proc.wait()
 
         # Run the script
-        if "install" in args:
+        if "install" in present_args:
             proc = subprocess.Popen(["PowerShell.exe", "-Command", ".\\win\\install.ps1"])
             proc.wait()
 
-        if "run" in args:
-            proc = subprocess.Popen(["PowerShell.exe", "-Command", ".\\win\\run.ps1"])
+        if "run" in present_args:
+            command = ".\\win\\run.ps1 {}".format(args['container']) if args['container'] else ".\\win\\run.ps1"
+            proc = subprocess.Popen(["PowerShell.exe", "-Command", command])
             proc.wait()
 
-        if "uninstall" in args:
+        if "uninstall" in present_args:
             proc = subprocess.Popen(["PowerShell.exe", "-Command", ".\\win\\uninstall.ps1"])
             proc.wait()
 
