@@ -11,7 +11,7 @@ RUN dnf install -y glibc-locale-source
 RUN  localedef --no-archive -i en_US -f UTF-8 en_US.UTF-8 && \
      export LANG=en_US.UTF-8
 
-RUN  dnf install -y dbus-x11 mesa-libGL PackageKit-gtk3-module libcanberra-gtk2 firefox
+RUN  dnf install -y dbus-x11 mesa-libGL mesa-libEGL PackageKit-gtk3-module libcanberra-gtk2 firefox
 RUN export $(dbus-launch)
 RUN  dbus-uuidgen > /etc/machine-id
 
