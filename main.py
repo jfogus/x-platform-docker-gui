@@ -65,7 +65,7 @@ def display_os_menu(supported_systems: "list[str]") -> int:
     return choice
 
 
-def process_system(system):
+def process_system(system: str) -> None:
     """ Calls the appropriate function based on the given system. """
     if system == "Darwin":
         mac.setup.setup()
