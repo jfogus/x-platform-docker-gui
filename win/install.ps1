@@ -49,7 +49,6 @@ if (Get-Command choco -ErrorAction SilentlyContinue) {
 }
 
 # Install VcXsrv
-# TODO: Update path to incldue vcxsrv folder
 if (Get-Command "C:\Program Files\VcXsrv\xlaunch.exe" -ErrorAction SilentlyContinue) {
     Write-Host "VcXsrv is already installed."
 } else {
