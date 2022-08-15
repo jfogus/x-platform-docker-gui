@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 import platform
+import argparse
 
 import mac.setup
 import lin.setup
 import win.setup
 
 
-def main():
+def main(argList: "list(str)") -> None:
     supported_systems = ["Darwin", "Linux", "Windows"]
     system = None
 
@@ -29,7 +30,7 @@ def main():
             elif choice == "quit":
                 exit(1)
                     
-    process_system(system)
+    process_system(system, argList)
 
 
 def display_system_conf_menu(system: str) -> str:
@@ -65,18 +66,27 @@ def display_os_menu(supported_systems: "list[str]") -> int:
     return choice
 
 
-def process_system(system: str) -> None:
+def process_system(system: str, args: "list(str)") -> None:
     """ Calls the appropriate function based on the given system. """
     if system == "Darwin":
-        mac.setup.setup()
+        mac.setup.setup(args)
     elif system == "Linux":
-        lin.setup.setup()
+        lin.setup.setup(args)
     elif system == "Windows":
-        win.setup.setup()
+        win.setup.setup(args)
     else:
         # Unknown system
         print("Error: Unable to identify your operating system. Exiting.")
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Parse run options.")
+    parser.add_argument("-i", "--install", action="store_true", help="Install dependencies.")
+    parser.add_argument("-r", "--run", action="store_true", help="Run the docker container.")
+    parser.add_argument("-u", "--uninstall", action="store_true", help="Uninstall dependencies.")
+
+    return [arg for arg, isset in vars(parser.parse_args()).items() if isset]
+
+
 if __name__ == "__main__":
-    main()
+    main(parse_args())
