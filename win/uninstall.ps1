@@ -25,10 +25,17 @@ if (Get-Command "C:\Program Files\VcXsrv\xlaunch.exe" -ErrorAction SilentlyConti
 
 # Uninstall Chocolatey
 if (Get-Command choco -ErrorAction SilentlyContinue) {
-    # TODO: Uninstall choco
-    # TODO: Delete C:\ProgramData\chocolatey or whatever $env:Chocolatey resolves to
-    # TODO: Remove ChocolateyInstall, ChocolateyToolsLocation, ChocolateyLastPathUpdate environment variables
-    # TODO: Update Path
+    Remove-Item $env:ChocolateyInstall -Recurse
+
+    # Update path
+    $path = [System.Environment]::GetEnvironmentVariable("Path", "Machine")
+    $newPath = ($path.split(";") | Where-Object { $_ -ne "C:\ProgramData\chocolatey\bin" }) -join ";"
+    [System.Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
+
+    # Remove additional environment variables
+    [System.Environment]::SetEnvironmentVariable("ChocolateyLastPathUpdate", $null, "User")
+    [System.Environment]::SetEnvironmentVariable("ChocolateyToolsLocation", $null, "User")
+    [System.Environment]::SetEnvironmentVariable("ChocolateyInstall", $null, "Machine")
 } else {
     Write-Host "Chocolately is not currently installed."
 }
