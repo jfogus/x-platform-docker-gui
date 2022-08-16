@@ -25,7 +25,7 @@ if (Get-Command "C:\Program Files\VcXsrv\xlaunch.exe" -ErrorAction SilentlyConti
 
 # Uninstall Chocolatey
 if (Get-Command choco -ErrorAction SilentlyContinue) {
-    Remove-Item $env:ChocolateyInstall -Recurse
+    Remove-Item $env:ChocolateyInstall -Recurse -Force
 
     # Update path
     $path = [System.Environment]::GetEnvironmentVariable("Path", "Machine")
