@@ -5,7 +5,7 @@ from typing import Union
 
 def setup(args: "dict[str, Union[bool, str]]") -> None:
     present_args = [arg for arg, val in args.items() if val]
-    # Install Dependencies
+
     try:
         # Get current ExecutionPolicy to reset after script
         proc = subprocess.Popen(["powershell.exe", "-Command", "Get-ExecutionPolicy"], stdout=subprocess.PIPE)
