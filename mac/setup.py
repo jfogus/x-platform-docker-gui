@@ -4,12 +4,19 @@ from typing import Union
 
 def setup(args: "dict[str, Union[bool, str]]") -> None:
     present_args = [arg for arg, val in args.items() if val]
-    # TODO: Set permissions to 744 on all scripts
 
     if "install" in present_args:
+        os.system("chmod u+x ./mac/install.zsh")
         os.system("./mac/install.zsh")
 
-    # Requires a restart probably
+    if "run" in present_args:
+        os.systme("chmod u+x ./mac/run.zsh")
+        os.system("./mac/run.zsh")
+
+    if "uninstall" in present_args:
+        os.system("chmod u+x ./mac/uninstall.zsh")
+        os.system("./mac/uninstall.zsh")
+
 
     # Run the X11 environment
     # os.system('socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"')
