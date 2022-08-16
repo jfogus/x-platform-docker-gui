@@ -1,3 +1,6 @@
+# TODO: import the module defined in prompt/prompt.psd1
+Import-Module -Name $PSScriptRoot\prompt.ps1
+
 $windowId = [System.Security.Principal.WindowsIdentity]::GetCurrent()
 $windowPrincipal = New-Object System.Security.Principal.WindowsPrincipal($windowId)
 
@@ -20,20 +23,10 @@ if ($windowPrincipal.IsInRole($adminRole)) {
 if (Get-Command choco -ErrorAction SilentlyContinue) {
     Write-Host "Chocolately is already installed."
 } else {
-    $response = ""
-    while ($response -eq "") {
-        Write-Host "Would you like to install Chocolatey package manager? [y/n/q] " -NoNewline
-
-        $response = Read-Host
-        $response = $response.ToLower()
-
-        if ($response -eq "q") {
-            Write-Host "Exiting..."
-            exit 1
-        } elseif (-Not ("y", "n").Contains($response)) {
-            Write-Host "Please enter a valid response."
-            $response = ""
-        }
+    $response = ynqPrompt -Prompt "Would you like to install Chocolatey package manager?"
+    if ($response -eq "q") {
+        Write-Host "Exiting..."
+        exit 1
     }
 
     if ($response -eq "y") {
@@ -41,10 +34,7 @@ if (Get-Command choco -ErrorAction SilentlyContinue) {
         Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
         # TODO: Restart the console
     } elseif ($response -eq "n") {
-        Write-Host "Please install VcXsrv manually."
-        Write-Host -NoNewline "Press any key to continue..."
-        $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-        exit 1
+        Write-Host "Not installing Chocolatey. This may be required."
     }
 }
 
@@ -52,9 +42,20 @@ if (Get-Command choco -ErrorAction SilentlyContinue) {
 if (Get-Command "C:\Program Files\VcXsrv\xlaunch.exe" -ErrorAction SilentlyContinue) {
     Write-Host "VcXsrv is already installed."
 } else {
-    choco install vcxsrv
+    $response = ynqPrompt -Prompt "Would you like to install VcXsrv?"
+    if ($response -eq "q") {
+        Write-Host "Exiting..."
+        exit 1
+    }
+
+    if ($response -eq "y") {
+        Write-Host "Installing VcXsrv..."
+        choco install vcxsrv
+    } elseif ($response -eq "n") {
+        Write-Host "Not installing VcXsrv. This may be required."
+    }
+    
 }
 
-# TODO: The following is for testing purposes only
 Write-Host -NoNewline "Press any key to continue..."
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
