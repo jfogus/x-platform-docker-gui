@@ -1,33 +1,19 @@
 import os
 
-def setup():
-    # Install Dependencies
-    print("\nChecking for brew installation:", end=" ", flush=True)
-    if (os.system('which brew') == 0):
-        print("\tBrew is already installed")
-    else:
-        print("\n\tInstalling brew")
-        os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+from typing import Union
 
-    print("\nChecking for socat installation:", end=" ", flush=True)
-    if (os.system('which socat') == 0):
-        print("\tSocat is already installed")
-    else:
-        print("\n\tInstalling socat")
-        os.system('brew install socat')
+def setup(args: "dict[str, Union[bool, str]]") -> None:
+    present_args = [arg for arg, val in args.items() if val]
+    # TODO: Set permissions to 744 on all scripts
 
-    print("\nChecking for XQuartz installation:", end=" ", flush=True)
-    if (os.system('which xquartz') == 0):
-        print("\tXQuartz is already installed")
-    else:
-        print("\n\tInstalling XQuartz")
-        os.system('brew install --cask xquartz')
+    if "install" in present_args:
+        os.system("./mac/install.zsh")
 
     # Requires a restart probably
 
     # Run the X11 environment
-    os.system('socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"')
-    os.system('open -a XQuartz')
+    # os.system('socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"')
+    # os.system('open -a XQuartz')
     
     # This runs the docker container
     # docker run -e DISPLAY=$(ifconfig en0 | grep "inet " | cut -d " " -f2):0 -v /tmp/.X11-unix:/tmp/.X11-unix <Container Name>
