@@ -57,5 +57,4 @@ if (Get-Command "C:\Program Files\VcXsrv\xlaunch.exe" -ErrorAction SilentlyConti
     
 }
 
-Write-Host -NoNewline "Press any key to continue..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+anyKeyPrompt
