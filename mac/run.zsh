@@ -11,7 +11,7 @@ if [ -z $container ]; then
     exit 2
 fi
 
-which docker >> null
+which docker > /dev/null
 if [ $? -ne 0 ]; then
     echo "Error: Please install docker first."
     exit 2
@@ -22,7 +22,7 @@ if [ -z $(docker images | grep -wo $1) ]; then
     exit 2
 fi
 
-docker stats --no-stream >> null
+docker stats --no-stream > /dev/null
 if [ $? -ne 0 ]; then
     echo "Please start the Docker daemon before running this script."
     exit 2
@@ -35,12 +35,12 @@ if [ -z $ipaddress ]; then
 fi
 
 # Confirm necessary software is installed
-which socat >> null
+which socat > /dev/null
 if [ $? -ne 0 ]; then
     echo "Error: Please run the install script first."
     exit 2
 fi
-which xquartz >> null
+which xquartz > /dev/null
 if [ $? -ne 0 ]; then
     echo "Error: Please run the install script first."
     exit 2
