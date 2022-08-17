@@ -1,24 +1,23 @@
 import os
 
+from typing import Union
 
-def setup():
-    # Confirm docker is ready
-    if os.system('systemctl is-active docker'):
-        if os.system('systemctl start docker'):
-            print('Attempting to start Docker')
-            exit(2)
-        if os.system('systemctl is-active docker'):
-            print('Unable to start Docker. Please start Docker, then run again')
-            exit(2)
 
-    # Setup the X11 environment
-    os.system('xhost +local:*')
+def setup(args: "dict[str, Union[bool, str]]") -> None:
+    present_args = [arg for arg, val in args.items() if val]
 
-    # Run the Docker container
-    os.system('docker run -it --net=host -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix gui-test')
+    if "install" in present_args:
+        os.system("chmod u+x ./lin/install.sh")
+        os.system("./lin/install.sh")
 
-    # Cleanup X11 environment
-    os.system('xhost -local:*')
+    if "run" in present_args:
+        command = "./lin/run.sh {}".format(args['container'] if args['container'] else "./lin/run.sh")
+        os.system("chmod u+x ./lin/run.sh")
+        os.system(command)
+    
+    if "uninstall" in present_args:
+        os.system("chmod u+x ./lin/uninstall.sh")
+        os.system("./lin/uninstall.sh")
 
 
 if __name__ == '__main__':
