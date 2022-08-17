@@ -15,12 +15,4 @@ RUN  dnf install -y dbus-x11 mesa-libGL mesa-libEGL PackageKit-gtk3-module libca
 RUN export $(dbus-launch)
 RUN  dbus-uuidgen > /etc/machine-id
 
-# CMD  /usr/bin/firefox
-RUN dnf install -y python3
-
-RUN cd /opt/
-RUN curl -LJO https://github.com/jksdou/tkinter-gui-application-examples/archive/refs/heads/master.zip
-RUN tar -xvf tkinter-gui-application-examples-master.zip
-RUN cd tkinter-gui-application-examples-master
-RUN python3 init.py
-RUN python3 main.py
+CMD  /usr/bin/firefox
