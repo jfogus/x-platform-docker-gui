@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-. ./prompt.sh
+# TODO: Reference only works when run from main.py
+. ./lin/prompt.sh
 
-echo "There are no dependencies that were installed."
+echo "There are no dependencies that need uninstalled."
 anyKeyPrompt
