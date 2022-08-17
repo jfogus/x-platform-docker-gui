@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
-. ./prompt.zsh
+# TODO: Reference only works if called by running main.py
+. ./mac/prompt.zsh
 
 # Uninstall XQuartz
 ynqPrompt "Uninstall XQuartz?"
