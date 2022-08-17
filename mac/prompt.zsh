@@ -13,3 +13,8 @@ function ynqPrompt() {
         fi
     done
 }
+
+function anyKeyPrompt() {
+    echo "Press any key to continue..."
+    read -sk 1
+}
