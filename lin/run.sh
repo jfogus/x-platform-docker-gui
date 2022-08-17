@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# TODO: Reference only works when run directly
+# TODO: Reference only works when run from main.py
 . ./lin/prompt.sh
 
 # Error handling
