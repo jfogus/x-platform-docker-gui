@@ -51,10 +51,10 @@ socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\" &
 open -a XQuartz &
 
 # This runs the docker container
-docker run -e DISPLAY=$ipaddress:0 -v /tmp/.X11-unix:/tmp/.X11-unix $container
+docker run --rm -e DISPLAY=$ipaddress:0 -v /tmp/.X11-unix:/tmp/.X11-unix $container
 
 # End previously started software
-kill -9 $(ps -e | grep "[s]ocat" | cut -d " " -f2)
-kill -9 $(ps -e | grep "[X]Quartz.app" | cut -d " " -f2)
+kill -9 $(ps -e | grep "[s]ocat" | cut -d " " -f1)
+kill -9 $(ps -e | grep "[X]Quartz.app" | cut -d " " -f1)
 
 anyKeyPrompt
