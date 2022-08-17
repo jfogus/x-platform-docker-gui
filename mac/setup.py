@@ -10,8 +10,9 @@ def setup(args: "dict[str, Union[bool, str]]") -> None:
         os.system("./mac/install.zsh")
 
     if "run" in present_args:
-        os.systme("chmod u+x ./mac/run.zsh")
-        os.system("./mac/run.zsh")
+        command = "./mac/run.zsh {}".format(args['container']) if args['container'] else "./mac/run.zsh"
+        os.system("chmod u+x ./mac/run.zsh")
+        os.system(command)
 
     if "uninstall" in present_args:
         os.system("chmod u+x ./mac/uninstall.zsh")
