@@ -28,6 +28,13 @@ number of the given pathways
   * Long form:  ```--container CONTAINER```
   * Must be paired with the ```-r``` flag.
 
+### Example
+1. ```docker build -t gui-example .```
+   * Run this from the root of the project to build the example container.
+2. ```./main.py -ir -c gui-example```
+   * Run this from the root of the project.
+   * This installs the dependencies and runs the gui-example container.
+
 ---
 ## Help
 From the root folder, run ``` main.py --help ``` for a list of flags to use.
