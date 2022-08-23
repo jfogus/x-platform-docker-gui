@@ -4,10 +4,10 @@
 
 # Error handling
 # Confirm Docker and related arguments are valid
-# $1 is the container passed by the -c flag
-container=$1
-if [ -z $container ]; then
-    echo "Please use the -c flag to name the container to run."
+# $* is the command passed by the -c flag
+command=$*
+if [ -z $command ]; then
+    echo "Please use the -c flag to name the command to run."
     exit 2
 fi
 
@@ -18,7 +18,7 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ -z $(docker images | grep -wo $1) ]; then
-    echo "Error: The given container name is invalid."
+    echo "Error: The given command is invalid."
     exit 2
 fi
 
@@ -46,12 +46,20 @@ if [ $? -ne 0 ]; then
     exit 2
 fi
 
+docker_run_cmd="docker run"
+prefix=${command%%$docker_run_cmd*}
+if [[ $prefix = $command ]]; then
+    echo "Error: Please pass an appropriate docker run command to -c."
+    exit 2
+fi
+
 # Run the X11 environment
 socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\" &
 open -a XQuartz &
 
-# This runs the docker container
-docker run --rm -e DISPLAY=$ipaddress:0 -v /tmp/.X11-unix:/tmp/.X11-unix $container
+# This runs the docker command
+# echo $prefix $docker_run_cmd -e DISPLAY=$ipaddress:0 -v /tmp/.X11-unix:/tmp/.X11-unix${command#$docker_run_cmd*}
+eval docker run -e DISPLAY=$ipaddress:0 -v /tmp/.X11-unix:/tmp/.X11-unix${command#$docker_run_cmd*}
 
 # End previously started software
 kill -9 $(ps -e | grep "[s]ocat" | cut -d " " -f1)
