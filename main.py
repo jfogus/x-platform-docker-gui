@@ -83,9 +83,9 @@ def process_system(system: str, args: "dict[str, Union[bool, str]]") -> None:
 def parse_args():
     parser = argparse.ArgumentParser(description="Parse run options.")
     parser.add_argument("-i", "--install", action="store_true", help="Install dependencies.")
-    parser.add_argument("-r", "--run", action="store_true", help="Run the docker container.")
+    parser.add_argument("-r", "--run", action="store_true", help="Execute the docker run command.")
     parser.add_argument("-u", "--uninstall", action="store_true", help="Uninstall dependencies.")
-    parser.add_argument("-c", "--container")
+    parser.add_argument("-c", "--command")
 
     return vars(parser.parse_args())
 
