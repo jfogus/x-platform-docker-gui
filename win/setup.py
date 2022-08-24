@@ -21,7 +21,7 @@ def setup(args: "dict[str, Union[bool, str]]") -> None:
             proc.wait()
 
         if "run" in present_args:
-            command = ".\\win\\run.ps1 {}".format(args['container']) if args['container'] else ".\\win\\run.ps1"
+            command = ".\\win\\run.ps1 \"{}\"".format(args['container']) if args['container'] else ".\\win\\run.ps1"
             proc = subprocess.Popen(["PowerShell.exe", "-Command", command])
             proc.wait()
 
