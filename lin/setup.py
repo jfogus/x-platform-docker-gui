@@ -11,7 +11,7 @@ def setup(args: "dict[str, Union[bool, str]]") -> None:
         os.system("./lin/install.sh")
 
     if "run" in present_args:
-        command = "./lin/run.sh {}".format(args['container'] if args['container'] else "./lin/run.sh")
+        command = "./lin/run.sh {}".format(args['command'] if args['command'] else "./lin/run.sh")
         os.system("chmod u+x ./lin/run.sh")
         os.system(command)
     

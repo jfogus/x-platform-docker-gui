@@ -25,3 +25,32 @@ function anyKeyPrompt {
     Write-Host -NoNewline "Press any key to continue..."
     &null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 }
+
+function openPrompt {
+    param(
+        [String] $Prompt
+    )
+
+    Write-Host -NoNewline "${Prompt}: "
+    $response = Read-Host
+
+    return $response
+}
+
+function validatePrompt {
+    param(
+        [ScriptBlock] $Validator,
+        [String] $Prompt
+    )
+
+    $valid = $false
+
+    while (!$valid) {
+        Write-Host -NoNewline "${Prompt}: "
+
+        $response = Read-Host
+        $valid = $Validator.Invoke($response)
+    }
+    
+    return $response
+}

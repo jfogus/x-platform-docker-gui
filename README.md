@@ -24,14 +24,14 @@ number of the given pathways
 * ```-u```: Uninstalls the dependencies indicated in the ```-i``` flag. A prompt
             confirms uninstallation prior to uninstalling each dependency.
   * Long form: ```--uninstall```
-* ```-c CONTAINER```: Supplies the name of the container that should be run.
-  * Long form:  ```--container CONTAINER```
+* ```-c COMMAND```: Supplies the docker run command that should be executed.
+  * Long form:  ```--command COMMAND```
   * Must be paired with the ```-r``` flag.
 
 ### Example
 1. ```docker build -t gui-example .```
    * Run this from the root of the project to build the example container.
-2. ```./main.py -ir -c gui-example```
+2. ```./main.py -ir -c docker run gui-example```
    * Run this from the root of the project.
    * This installs the dependencies and runs the gui-example container.
 
